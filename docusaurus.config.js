@@ -98,13 +98,13 @@ const config = {
             label: 'Docs',
           },
           {
-            to: '/blog', 
-            label: 'Blog', 
+            to: '/blog',
+            label: 'Blog',
             position: 'right',
           },
           {
-            to: '/news', 
-            label: 'News', 
+            to: '/news',
+            label: 'News',
             position: 'right',
           },
           {

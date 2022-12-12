@@ -12,7 +12,7 @@ A build tool (usually `conda-build`) takes the recipe and produces one or more p
 While you can distribute the artifacts on your own, the conda packages are usually uploaded to a `conda` _channel_ hosted in a server like Anaconda.org or Quetz.
 This channel _server_ processes all uploaded packages and aggregates the metadata contained in the packages in a single `repodata.json` file per platform or _subdir_.
 
-These are the metadata files that the `conda` client fetches when the user types `conda install ...`. 
+These are the metadata files that the `conda` client fetches when the user types `conda install ...`.
 The solver will process all the metadata and will provide the most adequate selection of packages to the user, which are then downloaded, extracted and linked into the target conda environment.
 
 ### Post-publication particularities

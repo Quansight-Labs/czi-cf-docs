@@ -6,23 +6,24 @@ sidebar_position: 3
 
 This page temporarily holds miscellaneous notes while the rest of the documentation is written.
 
-### Pipeline triggers
+## Pipeline triggers
 
 The feedstock pipelines are set up to react on the following triggers:
 
-* Pushes to `main` and, by default, all other branches in the repository. 
+* Pushes to `main` and, by default, all other branches in the repository.
   This includes the initial commit for the feedstock creation.
   When triggered this way, the pipelines **will upload** the artifacts produced by successful builds to the validation server.
 * Pushes to a PRs targetting any branch.
   These will not result in uploads to any server, even if successful.
 
-:::caution 
+:::caution
 
-Do note that since pushes to a branch result in uploads, any PRs you open **must be created from a fork**. 
+Do note that since pushes to a branch result in uploads, any PRs you open **must be created from a fork**.
 Do NOT create branches in the feedstock to open PRs.
 
 :::
-### Recommended workflow
+
+## Recommended workflow
 
 If you want to change how your package is built, the pipelines are set up to encourage the following workflow:
 
