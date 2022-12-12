@@ -10,10 +10,10 @@ This page temporarily holds miscellaneous notes while the rest of the documentat
 
 The feedstock pipelines are set up to react on the following triggers:
 
-* Pushes to `main` and, by default, all other branches in the repository.
+- Pushes to `main` and, by default, all other branches in the repository.
   This includes the initial commit for the feedstock creation.
   When triggered this way, the pipelines **will upload** the artifacts produced by successful builds to the validation server.
-* Pushes to a PRs targetting any branch.
+- Pushes to a PRs targetting any branch.
   These will not result in uploads to any server, even if successful.
 
 :::caution

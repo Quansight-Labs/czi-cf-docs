@@ -90,6 +90,6 @@ Feel free to refer to this list any time as you check the rest of the material.
 4. Package validation
 5. Package publication
 6. Post-publication:
-    1. Repodata patch
-    2. Mark a package as broken
-    3. Archive the feedstock
+   1. Repodata patch
+   2. Mark a package as broken
+   3. Archive the feedstock

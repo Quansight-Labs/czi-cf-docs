@@ -6,4 +6,4 @@ MD025:
   # Heading level
   level: 1
   # RegExp for matching title in front matter
-  front_matter_title: ""  # disable
+  front_matter_title: "" # disable
