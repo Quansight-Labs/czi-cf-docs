@@ -38,6 +38,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          breadcrumbs: true,
           ...editUrl,
         },
         blog: {
@@ -57,6 +58,7 @@ const config = {
         id: "community",
         path: "community",
         routeBasePath: "/community",
+        breadcrumbs: false,
       }),
     ],
     [

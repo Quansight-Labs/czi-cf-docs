@@ -84,12 +84,20 @@ If the maintainers want to, these feedstocks can be archived and marked as read-
 These stages are key concepts in the conda-forge documentation.
 Feel free to refer to this list any time as you check the rest of the material.
 
-1. Only once: Recipe submission
-2. Feedstock initialization or updates
+1. [Initial submission to `staged-recipes`](/docs/user/life-cycle/1-staged-recipes.md)
+2. Feedstock changes:
+   - A. Repository initialization
+   - B. Automated maintenance updates
+   - C. PRs submitted by users
 3. Package building
 4. Package validation
 5. Package publication
 6. Post-publication:
-   1. Repodata patch
-   2. Mark a package as broken
-   3. Archive the feedstock
+   - A. Repodata patch
+   - B. Mark a package as broken
+   - C. Archive the feedstock
+
+:::info
+If you want to read on the infrastructure details behind these stages,
+consider reading our [Infrastructure guide](/docs/infra/index.md).
+:::
