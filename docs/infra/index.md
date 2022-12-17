@@ -36,7 +36,6 @@ On pushes to `main`:
 
 - Create and initialize the new feedstocks.
 
-
 ## 2. Feedstock changes:
 
 A feedstock can receive changes for several reasons.
@@ -116,7 +115,6 @@ WIP.
 ### 6C. Archive the feedstock
 
 WIP.
-
 
 <!-- LINKS -->
 
