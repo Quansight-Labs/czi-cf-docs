@@ -36,6 +36,14 @@ On pushes to `main`:
 
 - Create and initialize the new feedstocks.
 
+Authenticated services involved:
+
+- Github, with permissions for:
+    - Repository creation
+- Azure Pipelines
+- Travis CI
+- Other CI providers?
+
 ## 2. Feedstock changes:
 
 A feedstock can receive changes for several reasons.
@@ -73,6 +81,7 @@ The pipelines that build conda packages are used for both pull requests and push
 - `conda-forge-ci-setup-feedstock` provides the code needed to prepare and homogeneize the CI runners across providers.
 - `conda-forge-pinning-feedstock` defines which versions are supported for a number of runtimes and libraries, as well as the compilers used for certain languages and platforms.
 - `docker-images` builds the standardized container images for Linux runners.
+  This repository has additional authentication needs for Docker Hub, Quay.io.
 
 The pipelines can run on a number of CI providers supported by `conda-smithy`, including:
 
@@ -87,32 +96,39 @@ Registration of hooks and triggers is also done by the `conda-smithy` app.
 `conda-smithy` supports more CI providers. Check [the repo][conda-smithy] for more details.
 :::
 
-## 4. Package validation
+Authenticated services involved:
+
+- Anaconda.org uploads to `cf-staging`
+
+## 4. Package validation and publication
 
 Once built on `main` (or other branches), the conda packages are uploaded to an intermediary channel named `cf-staging`. From there, the packages are downloaded by the validation server and, if successful, copied over to `conda-forge` itself.
 
 - The validation logic is defined at `conda-forge/artifact-validation`
 - If problematic, the results of the validation are posted as issues in the same repo.
-- This logic runs at XXXXX <!-- FIXME -->. This webapp also copies the artifacts from `cf-staging` to `conda-forge`.
+- This logic runs at `conda-forge/conda-forge-webservices`. This webapp also copies the artifacts from `cf-staging` to `conda-forge`.
 - Part of the validation includes checking for cross-package clobbering. The list of authorized feedstocks per package name is maintained at `conda-forge/feedstock-outputs`.
+- Some further analysis might be performed _after_ publication.
 
-## 5. Package publication
+Authenticated services involved:
 
-WIP.
+- Anaconda.org uploads to `conda-forge`
+- The `conda-forge-webservices` app deployment itself (currently at Heroku)
+- (?) Post new issues to `conda-forge/artifact-validation`
 
-## 6. Post-publication:
-
-WIP.
-
-### 6A. Repodata patch
-
-WIP.
-
-### 6B. Mark a package as broken
+## 5. Post-publication
 
 WIP.
 
-### 6C. Archive the feedstock
+### 5A. Repodata patch
+
+WIP.
+
+### 5B. Mark a package as broken
+
+WIP.
+
+### 5C. Archive the feedstock
 
 WIP.
 
