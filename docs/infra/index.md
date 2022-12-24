@@ -39,7 +39,7 @@ On pushes to `main`:
 Authenticated services involved:
 
 - Github, with permissions for:
-    - Repository creation
+  - Repository creation
 - Azure Pipelines
 - Travis CI
 - Other CI providers?
