@@ -110,14 +110,14 @@ Authenticated services involved:
 
 ## 4. Package validation and publication
 
-Once built on `main` (or other branches), the conda packages are uploaded to an intermediary channel named `cf-staging`. 
+Once built on `main` (or other branches), the conda packages are uploaded to an intermediary channel named `cf-staging`.
 From there, the packages are downloaded by the validation server and, if successful, copied over to `conda-forge` itself.
 
 - The validation logic is defined at `conda-forge/artifact-validation`
 - If problematic, the results of the validation are posted as issues in the same repo.
-- This logic runs at `conda-forge/conda-forge-webservices`. 
+- This logic runs at `conda-forge/conda-forge-webservices`.
   This webapp also copies the artifacts from `cf-staging` to `conda-forge`.
-- Part of the validation includes checking for cross-package clobbering. 
+- Part of the validation includes checking for cross-package clobbering.
   The list of authorized feedstocks per package name is maintained at `conda-forge/feedstock-outputs`.
 - Some further analysis might be performed _after_ publication.
 
@@ -149,26 +149,28 @@ Since the metadata is external to the files, some details can be modified withou
 which simplifies some maintenance tasks notably.
 
 <!-- FIXME: Confirm accuracy of this paragraph -->
+
 Repodata patches are created in `conda-forge/conda-forge-repodata-patches-feedstock`,
-which generates (and uploads) a regular `conda` package as the result: 
+which generates (and uploads) a regular `conda` package as the result:
 [`conda-forge-repodata-patches`](https://anaconda.org/conda-forge/conda-forge-repodata-patches/files).
 Each of these timestamped packages contains the patch instructions for each channel subdir on conda-forge.
 The Anaconda infrastructure takes the JSON files from these packages and applies them on top of the vanilla `repodata.json`.
 
-Since this operates as a regular feedstock for the purposes of packages publication, 
+Since this operates as a regular feedstock for the purposes of packages publication,
 there are no further infrastructural details to cover.
 
 ### 5B. Mark a package as broken
 
 Sometimes a package is faulty in ways that a repodata patch cannot amend (e.g. bad binary).
 In these cases, conda-forge does not remove packages from Anaconda.org.
-Instead, it marks them with `broken` label, which has a special meaning: 
+Instead, it marks them with `broken` label, which has a special meaning:
 packages labeled as such will be removed from the repodata via automated patches.
 
 The main repository handling this is `conda-forge/admin-requests`, which features different
 Github Actions workflows running every 15 minutes.
 
 For this task, the Github Action workflow needs access to:
+
 - Anaconda.org, to add (or remove) labels
 - Github, to modify and commit the input files after success
 
@@ -196,6 +198,7 @@ Non graph-depending changes:
 This action is done by `conda-smithy rerender`, which takes `recipe/meta.yaml`, `recipe/conda_build_config.yaml` and `conda-forge.yml` to produce the rest of the content you see in your feedstock.
 
 That content is fed by two main sources:
+
 - The templates defined in `conda-smithy` itself
 - The conda-forge pinnings file defined in `conda-forge/conda-forge-pinnings-feedstock`
 
@@ -210,23 +213,25 @@ These changes cannot be applied to all the feedstocks in conda-forge in any rand
 
 The conda-forge graph lists each feedstock _output_ as a node, and nodes connected by the outputs dependencies on each other (e.g. to migrate packages A, B and C, with A depending on B to run and/or be built, the bot would first migrate packages B and C, and A would only get the migration once B has been fully migrated). This is done through automated PRs that contain the migration file and the result of rerendering the feedstock. It's up to the feedstock maintainers to review and merge those PRs, since sometimes the PR introduces changes that do not pass the CI immediately (e.g. updating the pinned version of `openssl` to its newest release, which introduced API incompatible changes that break our package tests). Once merged, that feedstock has successfully completed its part of the migration and the bot can issue the PRs for the dependent feedstocks.
 
-Once the graph is (mostly) migrated, the migration process is "closed", which means that the global file now contains the results of the migration file. 
+Once the graph is (mostly) migrated, the migration process is "closed", which means that the global file now contains the results of the migration file.
 
 Where are all these pieces of infrastructure defined?
 
 The bot network is built with:
+
 - `regro/cf-scripts`: the logic encoding how to apply the changes driven by the migration scheme
 - `regro/autotick-bot`: the CI workflows running the migration logic
 
 The graph metadata is fed by:
+
 - `regro/libcfgraph`, as computed by `regro/libcflib`
 - `regro/cf-graph-countyfair`
-- 
+-
 
-The progress reports are displayed in:
-- 
-- 
-- 
+## The progress reports are displayed in:
+
+-
+-
 
 The most popular graph-dependent migrations are:
 
@@ -236,6 +241,7 @@ The most popular graph-dependent migrations are:
 #### Pinnings migrations
 
 <!-- TODO: Put this in the maintainer's guide and link to it in the list above -->
+
 The conda-forge pinnings file is the single source of truth for ABI stability for all conda-forge. Every feedstock contains the subset of that pinnings file that the recipe requires (thanks to `conda-smithy rerender`, which drops platform-specific configurations in the `.ci_support/` directory). With thousands of feedstocks, it wouldn't make sense to rerender all of them just because one definition in that pinnings file has changed. A definition that might not have any impact in that feedstock.
 
 This is why conda-forge uses a special bot to issue those rerender requests through the subset of the feedstock graph that need that "upgrade". The change is not applied to the global file from the beginning; instead, a _migration file_ is created, which contains the operations that would transform the global file into a fully migrated one. When `conda-smithy rerender` finds a migration file under `.ci_support/migrations`, it applies those operations to the global pinnings file, thus migrating that feedstock! Note that several migration files can coexist in the same feedstock at a given time.
